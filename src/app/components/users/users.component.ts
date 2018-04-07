@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import {User} from "../../models/User";
+import {Component, OnInit} from '@angular/core';
+import {User} from '../../models/User';
 
 @Component({
   selector: 'app-users',
@@ -7,43 +7,71 @@ import {User} from "../../models/User";
   styleUrls: ['./users.component.css']
 })
 export class UsersComponent implements OnInit {
+  user: User = {
+    firstName: '',
+    lastName: '',
+    email: ''
+  }
   users: User[];
+  showExtended: boolean = false;
+  loaded: boolean = false;
+  enableAdd: boolean = false;
+  showUserForm: boolean = true;
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
+
     this.users = [
       {
         firstName: 'Nancy',
         lastName: 'Trump',
-        age: 78,
-        address: {
-          street: '44 Tidewater Cir',
-          city: 'Foster City',
-          state: 'CA'
-        }
+        email: 'nancy@gmail.com',
+        isActive: true,
+        registered: new Date('01/01/2018 08:30:00'),
+        hide: true
       },
       {
         firstName: 'Donald',
         lastName: 'Pelosi',
-        age: 49,
-        address: {
-          street: '101 Main St',
-          city: 'Menlo Park',
-          state: 'CA'
-        }
+        email: 'donald@yahoo.com',
+        isActive: false,
+        registered: new Date('02/18/2018 04:30:00'),
+        hide: true
       },
       {
         firstName: 'John',
         lastName: 'Musk',
-        age: 63,
-        address: {
-          street: '1100 Lincoln Center Dr',
-          city: 'Stockton',
-          state: 'CA'
-        }
+        email: 'john@outlook.com',
+        isActive: true,
+        registered: new Date('03/30/2017 12:30:15'),
+        hide: true
       }
     ];
+
+    this.loaded = true;
   }
 
+
+  addUser() {
+    this.user.isActive = true;
+    this.user.registered = new Date();
+    this.users.unshift(this.user);
+
+    this.user = {
+      firstName: '',
+      lastName: '',
+      email: ''
+    };
+  }
+
+  toggleHide(user:User) {
+    user.hide = !user.hide;
+  }
+
+  onSubmit(e) {
+    console.log('1234');
+    e.preventDefault();
+  }
 }
